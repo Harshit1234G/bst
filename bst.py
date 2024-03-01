@@ -57,7 +57,9 @@ class BST:
     ```
 
     ## Note:
-    - I haven't added search function yet, so the program might show an unexpected behaviour if an element is already present while inserting, no elements present while traversing, etc.
+    - By default the self.insert() will take repeated values. If you don't want repeated values use self.search() before inserting. If node already present prompt user about it, else insert.
+    - If no value present in BST then inorder, preorder, and postorder will print nothing without prompting anything.
+    - If delete_value of self.remove() is not present in BST then the function will do nothing without prompting.
     """
     def __init__(self) -> None:
         self.root: Tree | None = None
@@ -177,10 +179,13 @@ class BST:
         """
         return self.__max(self.root)
 
-    def __max(self, root: Tree | None) -> int:
+    def __max(self, root: Tree | None) -> int | None:
         """
-        Returns the largest element of BST.
+        Returns the largest element of BST. If BST is empty returns None.
         """
+        if not root:
+            return None
+        
         while root.right:
             root = root.right
 
@@ -192,10 +197,13 @@ class BST:
         """
         return self.__min(self.root)
 
-    def __min(self, root: Tree | None) -> int:
+    def __min(self, root: Tree | None) -> int | None:
         """
-        Returns the smallest element of BST.
+        Returns the smallest element of BST. If BST is empty returns None.
         """
+        if not root:
+            return None
+        
         while root.left:
             root = root.left
 
@@ -255,10 +263,34 @@ class BST:
                 return root
 
         return root
+    
+    def search(self, search_value: int) -> Tree | None:
+        """
+        Searches the search_value in BST and if found returns the node else return None. 
+        """
+        return self.__search(self.root, search_value)
 
+    def __search(self, root: Tree | None, search_value: int) -> Tree | None:
+        while root:
+            if search_value == root.value:
+                return root
+            
+            elif search_value < root.value:
+                root = self.__search(root.left, search_value)
+
+            else:
+                root = self.__search(root.right, search_value)
+
+        return root
 
 if __name__ == '__main__':
     tree = BST()
+
+    tree.inorder()
+    print(tree.height())
+    print(tree.size())
+    print(tree.min())
+    print(tree.max())
 
     tree.insert(50)
     tree.insert(60)
@@ -288,4 +320,7 @@ if __name__ == '__main__':
     tree.remove(15)
     tree.remove(40)
     tree.remove(50)
+    tree.remove(0)
     tree.inorder()
+    print()
+    print(tree.search(5), tree.search(0))
