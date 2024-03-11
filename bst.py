@@ -36,6 +36,7 @@ class BST:
     - `__min()`: Returns the smallest element of BST.
     - `__remove()`: Removes an existing element from BST.
     - `__min_node()`: Returns the minimum node.
+    - `__search()`: Searches the value in BST.
 
     ### Public Functions: 
     - `insert`, `inorder`, `preorder`, `postorder`, `height`, `size`, `max`, `min`, `remove`.
@@ -271,15 +272,17 @@ class BST:
         return self.__search(self.root, search_value)
 
     def __search(self, root: Tree | None, search_value: int) -> Tree | None:
-        while root:
-            if search_value == root.value:
-                return root
-            
-            elif search_value < root.value:
-                root = self.__search(root.left, search_value)
+        if not root:
+            return None
+        
+        if search_value == root.value:
+            return root
+        
+        elif search_value < root.value:
+            root = self.__search(root.left, search_value)
 
-            else:
-                root = self.__search(root.right, search_value)
+        else:
+            root = self.__search(root.right, search_value)
 
         return root
 
