@@ -49,9 +49,7 @@ class BinaryTree:
 
         # if root is a leaf node
         if not root.right and not root.left:
-            print(space * (level + 1), None, sep='')
             print(space * level, root.value, sep='')
-            print(space * (level + 1), None, sep='')
             return None
 
         # if root has child
@@ -88,6 +86,21 @@ class BinaryTree:
                 return False
             
         return True
+    
+    def is_balanced(self) -> tuple[bool, int]:
+        return self.__is_balanced(self.root)
+    
+    def __is_balanced(self, root: NodeOrNone) -> tuple[bool, int]:
+        if not root:
+            return True, 0
+        
+        balanced_l, height_l = self.__is_balanced(root.left)
+        balanced_r, height_r = self.__is_balanced(root.right)
+
+        balanced = balanced_l and balanced_r and abs(height_l - height_r) <= 1
+        height = 1 + max(height_r, height_l)
+
+        return balanced, height
 
     def __str__(self) -> str:
         return str(self.root)
@@ -109,3 +122,11 @@ if __name__ == '__main__':
     tree3 = BinaryTree((('aakash', 'biraj', 'hemanth')  , 'jadhesh', ('siddhant', 'sonaksh', 'vishal')))
     tree3.display()
     print(tree3.is_bst())
+
+    tree4 = BinaryTree((None, 2, (None, 3, (None, 4, (None, 5, None)))))
+    tree4.display()
+    
+    print(tree.is_balanced())
+    print(tree2.is_balanced())
+    print(tree3.is_balanced())
+    print(tree4.is_balanced())
