@@ -12,8 +12,7 @@ class Tree[node]:
 
 
 class BST:
-    def __init__(self) -> None:
-        self.root: Tree | None = None
+    root: Tree | None = None
 
     def insert(self, username: str, name: str, email: str) -> None:
         self.root = self.__insert(self.root, username, name, email)
